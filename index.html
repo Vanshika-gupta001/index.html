@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vanshika Gupta — AI / ML Systems</title>
+<meta name="description" content="Vanshika Gupta — MBA (AI & ML) candidate. Interactive engineering portfolio: data profiling systems, ML/AI product work, and evidence." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/128.0.0/three.min.js"></script>
+<style>
+:root{
+  --void:#05070d;
+  --panel:#0a0f1e;
+  --panel-2:#0d1428;
+  --line:#1b2540;
+  --line-soft:#141b30;
+  --text:#e7ecf9;
+  --text-dim:#8993b3;
+  --text-faint:#525d7d;
+  --blue:#5b82ff;
+  --violet:#8f6bff;
+  --cyan:#3fe0ff;
+  --ok:#43d9a3;
+  --radius:2px;
+  --font-display:'Space Grotesk',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--void);
+  color:var(--text);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+  position:relative;
+  min-height:100vh;
+}
+::selection{background:var(--blue); color:#fff;}
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:var(--void);}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:4px;}
+
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit;}
+
+/* ---------- background grid + glow layers ---------- */
+.bg-grid{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(140,150,200,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140,150,200,0.05) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+}
+.bg-glow{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(600px 400px at 15% 8%, rgba(91,130,255,0.14), transparent 60%),
+    radial-gradient(500px 380px at 88% 20%, rgba(143,107,255,0.10), transparent 60%);
+}
+
+.wrap{position:relative; z-index:1;}
+section{position:relative; z-index:1;}
+
+/* ---------- focus ---------- */
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--cyan); outline-offset:2px;
+}
+
+/* ---------- top nav ---------- */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 28px;
+  background:linear-gradient(to bottom, rgba(5,7,13,0.92), rgba(5,7,13,0));
+  backdrop-filter:blur(6px);
+}
+.nav-mark{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--font-mono); font-size:13px; letter-spacing:0.06em;
+}
+.nav-mark .bracket{
+  width:26px; height:26px; border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--cyan); font-family:var(--font-display); font-weight:600;
+  background:var(--panel);
+}
+.nav-links{display:flex; gap:26px; align-items:center;}
+.nav-links a{
+  font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.08em;
+  color:var(--text-dim); transition:color .2s;
+  display:flex; align-items:center; gap:6px;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-links a .n{color:var(--text-faint);}
+.nav-right{display:flex; align-items:center; gap:14px;}
+.kbd-hint{
+  font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+  border:1px solid var(--line); padding:5px 9px; display:flex; align-items:center; gap:6px;
+  transition:border-color .2s, color .2s;
+}
+.kbd-hint:hover{border-color:var(--blue); color:var(--text-dim);}
+.kbd-hint kbd{font-family:inherit; background:var(--panel-2); padding:1px 5px; border:1px solid var(--line-soft);}
+.btn-recruiter{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em;
+  border:1px solid var(--blue); color:var(--blue); padding:7px 12px;
+  transition:all .2s;
+}
+.btn-recruiter:hover{background:var(--blue); color:#fff;}
+@media (max-width:900px){ .nav-links{display:none;} }
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100svh; display:flex; align-items:center;
+  padding:120px 6vw 60px;
+  position:relative;
+}
+#hero-canvas{
+  position:absolute; inset:0; z-index:0; opacity:0.9;
+}
+.hero-grid{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:1.3fr 0.9fr; gap:40px;
+  width:100%; max-width:1320px; margin:0 auto;
+  align-items:center;
+}
+.eyebrow{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:0.18em;
+  color:var(--cyan); display:flex; align-items:center; gap:10px; margin-bottom:22px;
+}
+.eyebrow::before{content:''; width:22px; height:1px; background:var(--cyan);}
+.hero h1{
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(2.6rem, 6.2vw, 5.2rem); line-height:0.98; letter-spacing:-0.01em;
+  margin-bottom:18px;
+}
+.hero h1 span{color:var(--text-faint); font-weight:400; -webkit-text-stroke:1px var(--text-faint); color:transparent;}
+.hero-role{
+  font-family:var(--font-mono); font-size:14px; letter-spacing:0.12em; color:var(--text-dim);
+  margin-bottom:26px; display:flex; gap:10px; flex-wrap:wrap;
+}
+.hero-role b{color:var(--text); font-weight:500;}
+.hero-role .dot{color:var(--violet);}
+.hero-tagline{
+  font-size:clamp(1.05rem,2vw,1.3rem); color:var(--text); max-width:520px;
+  line-height:1.5; margin-bottom:34px; font-weight:400;
+}
+.hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px;}
+.btn{
+  font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.06em; padding:13px 22px;
+  border:1px solid var(--line); transition:all .2s; display:inline-flex; align-items:center; gap:8px;
+}
+.btn-primary{background:var(--blue); border-color:var(--blue); color:#fff;}
+.btn-primary:hover{background:#4670f2; box-shadow:0 0 24px rgba(91,130,255,0.35);}
+.btn-ghost:hover{border-color:var(--text-dim); color:var(--text);}
+.btn-ghost{color:var(--text-dim);}
+
+.hero-meta{
+  display:flex; gap:0; border-top:1px solid var(--line-soft); padding-top:18px; max-width:520px;
+}
+.hero-meta div{flex:1; padding-right:16px;}
+.hero-meta .k{font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.1em; color:var(--text-faint); margin-bottom:6px;}
+.hero-meta .v{font-size:13px; color:var(--text-dim); line-height:1.4;}
+
+/* identity / system panel */
+.system-panel{
+  position:relative; z-index:2;
+  background:rgba(10,15,30,0.55); border:1px solid var(--line);
+  padding:22px; backdrop-filter:blur(10px);
+  font-family:var(--font-mono);
+}
+.system-panel .sp-head{
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:10.5px; letter-spacing:0.1em; color:var(--text-faint);
+  border-bottom:1px solid var(--line-soft); padding-bottom:12px; margin-bottom:14px;
+}
+.pulse{width:6px; height:6px; border-radius:50%; background:var(--ok); box-shadow:0 0 8px var(--ok); animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+.sp-row{display:flex; justify-content:space-between; font-size:11.5px; padding:8px 0; border-bottom:1px dashed var(--line-soft); color:var(--text-dim);}
+.sp-row span:last-child{color:var(--text);}
+.identity-node{
+  display:flex; align-items:center; gap:14px; margin-bottom:18px;
+}
+.identity-node .avatar{
+  width:52px; height:52px; border:1px solid var(--blue); display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:700; font-size:16px; color:var(--cyan);
+  background:linear-gradient(135deg, rgba(91,130,255,0.12), rgba(143,107,255,0.08));
+  position:relative;
+}
+.identity-node .avatar::after{
+  content:''; position:absolute; inset:-4px; border:1px solid rgba(63,224,255,0.25);
+}
+.identity-node .id-text .name{font-family:var(--font-display); font-size:14px; color:var(--text);}
+.identity-node .id-text .role{font-size:10.5px; color:var(--text-faint); margin-top:2px;}
+.chip-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px;}
+.chip{
+  font-family:var(--font-mono); font-size:10px; letter-spacing:0.04em; color:var(--text-dim);
+  border:1px solid var(--line-soft); padding:4px 8px;
+}
+
+/* scroll cue */
+.scroll-cue{
+  position:absolute; bottom:26px; left:50%; transform:translateX(-50%);
+  font-family:var(--font-mono); font-size:10px; letter-spacing:0.15em; color:var(--text-faint);
+  display:flex; flex-direction:column; align-items:center; gap:8px; z-index:2;
+}
+.scroll-cue .line{width:1px; height:34px; background:linear-gradient(var(--text-faint), transparent); animation:scrolldown 1.8s infinite;}
+@keyframes scrolldown{0%{opacity:0; transform:scaleY(0.4); transform-origin:top;} 40%{opacity:1; transform:scaleY(1); transform-origin:top;} 100%{opacity:0; transform:scaleY(1); transform-origin:bottom;}}
+
+/* ---------- section shared ---------- */
+.section{padding:110px 6vw; max-width:1320px; margin:0 auto;}
+.section-head{margin-bottom:56px; max-width:680px;}
+.section-num{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); letter-spacing:0.1em; margin-bottom:10px;}
+.section-title{font-family:var(--font-display); font-size:clamp(1.8rem,3.6vw,2.8rem); font-weight:700; letter-spacing:-0.01em; margin-bottom:14px;}
+.section-desc{color:var(--text-dim); font-size:15px; line-height:1.6; max-width:560px;}
+.hairline{border:none; border-top:1px solid var(--line-soft); margin:0;}
+
+/* ---------- career map ---------- */
+.map-shell{
+  display:grid; grid-template-columns:1.5fr 1fr; gap:32px; align-items:stretch;
+}
+#career-map{
+  position:relative; height:520px; border:1px solid var(--line); background:var(--panel);
+  overflow:hidden;
+}
+#career-map svg{position:absolute; inset:0; width:100%; height:100%;}
+.map-node{
+  position:absolute; transform:translate(-50%,-50%);
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.02em;
+  padding:8px 12px; border:1px solid var(--line); background:rgba(10,15,30,0.9);
+  color:var(--text-dim); white-space:nowrap; cursor:pointer;
+  transition:all .18s ease; z-index:2;
+}
+.map-node:hover, .map-node.active{
+  border-color:var(--cyan); color:var(--text); background:rgba(63,224,255,0.08);
+  box-shadow:0 0 18px rgba(63,224,255,0.18);
+}
+.map-node.core{
+  font-family:var(--font-display); font-weight:600; font-size:14px; color:var(--text);
+  border-color:var(--violet); background:rgba(143,107,255,0.1); padding:12px 18px;
+}
+.map-node.cluster{color:var(--text-faint); font-size:10px; border-style:dashed; opacity:0.7; cursor:default;}
+.map-line{stroke:var(--line); stroke-width:1; fill:none;}
+.map-line.lit{stroke:var(--cyan); stroke-width:1.2; opacity:0.7;}
+
+.map-detail{
+  border:1px solid var(--line); background:var(--panel); padding:26px;
+  display:flex; flex-direction:column;
+}
+.map-detail .md-label{font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); letter-spacing:0.1em; margin-bottom:10px;}
+.map-detail .md-title{font-family:var(--font-display); font-size:22px; font-weight:600; margin-bottom:16px;}
+.map-detail .md-block{margin-bottom:16px;}
+.map-detail .md-block h4{font-family:var(--font-mono); font-size:10px; color:var(--cyan); letter-spacing:0.08em; margin-bottom:6px;}
+.map-detail .md-block p{font-size:13.5px; color:var(--text-dim); line-height:1.6;}
+.map-detail .md-block a{color:var(--blue); font-family:var(--font-mono); font-size:12px; border-bottom:1px solid rgba(91,130,255,0.3);}
+.map-hint{color:var(--text-faint); font-size:13px; line-height:1.7; margin-top:auto;}
+
+/* ---------- signature project ---------- */
+.sig-shell{border:1px solid var(--line); background:var(--panel);}
+.sig-top{padding:36px 36px 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+.sig-top .tag{font-family:var(--font-mono); font-size:11px; color:var(--cyan); letter-spacing:0.1em;}
+.sig-top h3{font-family:var(--font-display); font-size:clamp(1.6rem,3vw,2.2rem); margin:10px 0 6px;}
+.sig-top .stack{font-family:var(--font-mono); font-size:12px; color:var(--text-dim);}
+.sig-links{display:flex; gap:12px; align-self:flex-start;}
+.sig-links a{font-family:var(--font-mono); font-size:11.5px; border:1px solid var(--line); padding:9px 14px; color:var(--text-dim); transition:all .2s;}
+.sig-links a:hover{border-color:var(--blue); color:var(--text);}
+
+.pipeline{
+  display:flex; align-items:stretch; gap:0; padding:40px 36px; overflow-x:auto;
+}
+.pipe-node{
+  min-width:150px; padding:16px 14px; border:1px solid var(--line-soft);
+  font-family:var(--font-mono); font-size:11px; color:var(--text-dim); position:relative;
+  background:linear-gradient(180deg, rgba(91,130,255,0.05), transparent);
+}
+.pipe-node .pn-i{font-size:9px; color:var(--text-faint); margin-bottom:8px;}
+.pipe-node .pn-t{color:var(--text); font-size:12.5px; line-height:1.4;}
+.pipe-arrow{
+  display:flex; align-items:center; justify-content:center; width:36px; color:var(--text-faint); flex-shrink:0;
+}
+@media (max-width:820px){ .pipeline{flex-direction:column;} .pipe-arrow{transform:rotate(90deg); width:100%; height:24px;} }
+
+.sig-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-soft);
+  border-top:1px solid var(--line-soft);
+}
+.sig-cell{background:var(--panel); padding:26px 30px;}
+.sig-cell h4{font-family:var(--font-mono); font-size:10.5px; color:var(--violet); letter-spacing:0.09em; margin-bottom:10px;}
+.sig-cell p, .sig-cell li{font-size:13px; color:var(--text-dim); line-height:1.65;}
+.sig-cell ul{padding-left:16px;}
+.sig-cell .placeholder{color:var(--text-faint); font-style:italic;}
+@media (max-width:820px){ .sig-grid{grid-template-columns:1fr;} }
+
+/* ---------- projects wall ---------- */
+.proj-list{display:flex; flex-direction:column; gap:1px; background:var(--line-soft); border:1px solid var(--line-soft);}
+.proj-item{background:var(--panel); transition:background .2s;}
+.proj-head{
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+  padding:26px 30px; cursor:pointer;
+}
+.proj-head:hover{background:var(--panel-2);}
+.proj-id{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); width:70px; flex-shrink:0;}
+.proj-title{flex:1; min-width:200px;}
+.proj-title h3{font-family:var(--font-display); font-size:20px; font-weight:600;}
+.proj-title p{font-family:var(--font-mono); font-size:11.5px; color:var(--text-dim); margin-top:5px;}
+.proj-toggle{font-family:var(--font-mono); font-size:11px; color:var(--blue); flex-shrink:0; display:flex; align-items:center; gap:6px;}
+.proj-toggle .arrow{transition:transform .25s;}
+.proj-item.open .proj-toggle .arrow{transform:rotate(90deg);}
+.proj-body{max-height:0; overflow:hidden; transition:max-height .35s ease;}
+.proj-item.open .proj-body{max-height:1000px;}
+.proj-body-inner{
+  padding:0 30px 30px; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px;
+}
+.proj-body-inner .pb-block h5{font-family:var(--font-mono); font-size:10px; color:var(--cyan); letter-spacing:0.08em; margin-bottom:8px;}
+.proj-body-inner .pb-block p, .proj-body-inner .pb-block li{font-size:13px; color:var(--text-dim); line-height:1.6;}
+.proj-body-inner .pb-block ul{padding-left:16px;}
+.proj-body-inner .pb-block a{color:var(--blue); font-family:var(--font-mono); font-size:12px;}
+
+/* ---------- how i think ---------- */
+.think-shell{display:grid; grid-template-columns:0.9fr 1.4fr; gap:0; border:1px solid var(--line);}
+.think-scenario{padding:32px; border-right:1px solid var(--line); background:var(--panel);}
+.think-scenario .ts-label{font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); letter-spacing:0.1em; margin-bottom:14px;}
+.think-scenario .ts-text{font-family:var(--font-display); font-size:22px; line-height:1.3; margin-bottom:20px;}
+.think-scenario p{font-size:13px; color:var(--text-dim); line-height:1.65;}
+.think-steps{display:flex; flex-direction:column;}
+.think-step{border-bottom:1px solid var(--line-soft); padding:18px 26px; cursor:pointer; transition:background .2s;}
+.think-step:last-child{border-bottom:none;}
+.think-step:hover{background:var(--panel-2);}
+.ts-row{display:flex; align-items:center; gap:16px; font-family:var(--font-mono); font-size:12.5px;}
+.ts-row .ts-num{color:var(--text-faint); width:26px;}
+.ts-row .ts-name{flex:1; color:var(--text);}
+.ts-detail{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+.think-step.open .ts-detail{max-height:200px; margin-top:10px;}
+.ts-detail p{font-size:13px; color:var(--text-dim); line-height:1.6; padding-left:42px;}
+@media (max-width:820px){ .think-shell{grid-template-columns:1fr;} .think-scenario{border-right:none; border-bottom:1px solid var(--line);} }
+
+/* ---------- engineering log ---------- */
+.eng-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-soft); border:1px solid var(--line-soft);}
+@media (max-width:980px){ .eng-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:620px){ .eng-grid{grid-template-columns:1fr;} }
+.eng-card{background:var(--panel); padding:26px;}
+.eng-card h4{font-family:var(--font-display); font-size:16px; margin-bottom:16px;}
+.eng-row{margin-bottom:12px;}
+.eng-row span{font-family:var(--font-mono); font-size:9.5px; color:var(--violet); letter-spacing:0.08em; display:block; margin-bottom:4px;}
+.eng-row p{font-size:12.5px; color:var(--text-dim); line-height:1.55;}
+.eng-row p.ph{color:var(--text-faint); font-style:italic;}
+
+/* ---------- build log ---------- */
+.log-list{border-left:1px solid var(--line); margin-left:6px;}
+.log-entry{position:relative; padding:0 0 40px 30px;}
+.log-entry::before{content:''; position:absolute; left:-5px; top:4px; width:9px; height:9px; background:var(--void); border:1px solid var(--cyan);}
+.log-entry:last-child{padding-bottom:0;}
+.log-date{font-family:var(--font-mono); font-size:11px; color:var(--cyan); letter-spacing:0.08em; margin-bottom:6px;}
+.log-entry h4{font-family:var(--font-display); font-size:17px; margin-bottom:6px;}
+.log-entry p{font-size:13.5px; color:var(--text-dim); line-height:1.6; max-width:600px;}
+
+/* ---------- contact / footer ---------- */
+.contact-shell{display:flex; flex-wrap:wrap; justify-content:space-between; gap:40px; align-items:flex-end;}
+.contact-cta h2{font-family:var(--font-display); font-size:clamp(1.8rem,4vw,3rem); font-weight:700; max-width:640px; line-height:1.15;}
+.contact-links{display:flex; flex-direction:column; gap:2px;}
+.contact-links a{
+  font-family:var(--font-mono); font-size:13px; color:var(--text-dim); padding:10px 0;
+  border-bottom:1px solid var(--line-soft); display:flex; justify-content:space-between; gap:30px; min-width:260px;
+  transition:color .2s;
+}
+.contact-links a:hover{color:var(--cyan);}
+.contact-links-static{
+  font-family:var(--font-mono); font-size:13px; color:var(--text-dim); padding:10px 0;
+  border-bottom:1px solid var(--line-soft); display:flex; justify-content:space-between; gap:30px; min-width:260px;
+}
+footer{padding:26px 6vw; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); border-top:1px solid var(--line-soft); flex-wrap:wrap; gap:10px;}
+
+/* ---------- AI assistant orb + panel ---------- */
+.ai-orb{
+  position:fixed; bottom:26px; right:26px; z-index:80;
+  width:58px; height:58px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #7aa0ff, #4a5bd6 55%, #241b6b);
+  border:1px solid rgba(143,107,255,0.5);
+  box-shadow:0 0 0 1px rgba(63,224,255,0.15), 0 8px 30px rgba(91,130,255,0.35);
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  animation:orb-float 4s ease-in-out infinite;
+}
+.ai-orb::after{
+  content:''; position:absolute; inset:-6px; border-radius:50%; border:1px solid rgba(63,224,255,0.25);
+  animation:orb-ring 3s linear infinite;
+}
+@keyframes orb-float{0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);}}
+@keyframes orb-ring{0%{transform:scale(1); opacity:0.6;} 100%{transform:scale(1.5); opacity:0;}}
+.ai-orb svg{width:22px; height:22px; color:#fff;}
+
+.ai-panel{
+  position:fixed; bottom:100px; right:26px; z-index:80;
+  width:min(380px, 88vw); max-height:560px;
+  background:rgba(10,14,26,0.97); border:1px solid var(--line); backdrop-filter:blur(14px);
+  display:flex; flex-direction:column; overflow:hidden;
+  transform:translateY(16px) scale(0.98); opacity:0; pointer-events:none;
+  transition:all .22s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.ai-panel.open{transform:translateY(0) scale(1); opacity:1; pointer-events:auto;}
+.ai-head{padding:16px 18px; border-bottom:1px solid var(--line-soft); display:flex; justify-content:space-between; align-items:flex-start;}
+.ai-head .ai-title{font-family:var(--font-display); font-size:15px; font-weight:600; display:flex; align-items:center; gap:8px;}
+.ai-head .ai-sub{font-family:var(--font-mono); font-size:10px; color:var(--text-faint); margin-top:3px; letter-spacing:0.05em;}
+.ai-close{color:var(--text-faint); font-size:18px; line-height:1;}
+.ai-close:hover{color:var(--text);}
+.ai-body{flex:1; overflow-y:auto; padding:16px 18px; display:flex; flex-direction:column; gap:12px; min-height:180px;}
+.ai-msg{font-size:13px; line-height:1.6; max-width:92%;}
+.ai-msg.bot{color:var(--text-dim); background:var(--panel-2); padding:10px 12px; border:1px solid var(--line-soft); align-self:flex-start;}
+.ai-msg.user{color:var(--text); background:rgba(91,130,255,0.12); border:1px solid rgba(91,130,255,0.3); padding:10px 12px; align-self:flex-end;}
+.ai-suggest{display:flex; flex-wrap:wrap; gap:6px; padding:0 18px 14px;}
+.ai-suggest button{
+  font-family:var(--font-mono); font-size:10.5px; color:var(--text-dim); border:1px solid var(--line-soft);
+  padding:6px 9px; text-align:left; transition:all .2s;
+}
+.ai-suggest button:hover{border-color:var(--cyan); color:var(--text);}
+.ai-note{font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); padding:0 18px 14px; line-height:1.5;}
+
+/* ---------- command palette ---------- */
+.cmdk-overlay{
+  position:fixed; inset:0; z-index:100; background:rgba(3,4,9,0.75); backdrop-filter:blur(4px);
+  display:flex; align-items:flex-start; justify-content:center; padding-top:14vh;
+  opacity:0; pointer-events:none; transition:opacity .18s ease;
+}
+.cmdk-overlay.open{opacity:1; pointer-events:auto;}
+.cmdk-box{
+  width:min(560px, 90vw); background:var(--panel); border:1px solid var(--line);
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+}
+.cmdk-input{
+  width:100%; background:transparent; border:none; border-bottom:1px solid var(--line-soft);
+  padding:18px 20px; font-family:var(--font-mono); font-size:14px; color:var(--text); outline:none;
+}
+.cmdk-input::placeholder{color:var(--text-faint);}
+.cmdk-list{max-height:340px; overflow-y:auto; padding:8px;}
+.cmdk-item{
+  padding:12px 14px; font-family:var(--font-mono); font-size:12.5px; color:var(--text-dim);
+  display:flex; justify-content:space-between; cursor:pointer;
+}
+.cmdk-item:hover, .cmdk-item.sel{background:var(--panel-2); color:var(--text);}
+.cmdk-item .tag{color:var(--text-faint); font-size:10px;}
+
+/* ---------- recruiter mode ---------- */
+.recruiter-overlay{
+  position:fixed; inset:0; z-index:95; background:rgba(3,4,9,0.96);
+  display:flex; align-items:center; justify-content:center; padding:6vw;
+  opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.recruiter-overlay.open{opacity:1; pointer-events:auto;}
+.rec-box{
+  width:min(640px,92vw); border:1px solid var(--line); background:var(--panel); padding:44px;
+  position:relative;
+}
+.rec-close{position:absolute; top:18px; right:20px; font-family:var(--font-mono); font-size:11px; color:var(--text-faint); border:1px solid var(--line-soft); padding:6px 10px;}
+.rec-close:hover{color:var(--text);}
+.rec-box .rec-eyebrow{font-family:var(--font-mono); font-size:10.5px; color:var(--cyan); letter-spacing:0.12em; margin-bottom:10px;}
+.rec-box h2{font-family:var(--font-display); font-size:clamp(1.8rem,3.6vw,2.4rem); margin-bottom:28px;}
+.rec-block{margin-bottom:24px; border-top:1px solid var(--line-soft); padding-top:18px;}
+.rec-block h4{font-family:var(--font-mono); font-size:10px; color:var(--violet); letter-spacing:0.1em; margin-bottom:10px;}
+.rec-block p, .rec-block li{font-size:14px; color:var(--text-dim); line-height:1.6;}
+.rec-block ul{padding-left:18px;}
+.rec-tags{display:flex; flex-wrap:wrap; gap:8px;}
+.rec-tags span{font-family:var(--font-mono); font-size:11px; border:1px solid var(--line-soft); padding:6px 10px; color:var(--text-dim);}
+.rec-cta{margin-top:8px; display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12.5px; color:var(--blue); border-bottom:1px solid rgba(91,130,255,0.4); padding-bottom:2px;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .map-shell{grid-template-columns:1fr;}
+  #career-map{height:420px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-mark"><div class="bracket">V</div> VANSHIKA</div>
+  <div class="nav-links">
+    <a href="#system"><span class="n">01</span> SYSTEM</a>
+    <a href="#map"><span class="n">02</span> MAP</a>
+    <a href="#signature"><span class="n">03</span> WORK</a>
+    <a href="#think"><span class="n">04</span> THINKING</a>
+    <a href="#log"><span class="n">05</span> LOG</a>
+    <a href="#contact"><span class="n">06</span> CONTACT</a>
+  </div>
+  <div class="nav-right">
+    <button class="kbd-hint" id="cmdk-trigger">Search <kbd>⌘K</kbd></button>
+    <button class="btn-recruiter" id="recruiter-open">RECRUITER MODE</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- HERO -->
+<section class="hero" id="system">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">PORTFOLIO INTELLIGENCE // ONLINE</div>
+      <h1>VANSHIKA<br><span>GUPTA</span></h1>
+      <div class="hero-role"><b>AI / ML</b><span class="dot">·</span><b>DATA</b><span class="dot">·</span><b>PRODUCT</b></div>
+      <p class="hero-tagline">Turning raw business data into decision-ready systems — through data profiling, applied machine learning, and AI-driven product design.</p>
+      <div class="hero-cta">
+        <a href="#signature" class="btn btn-primary">Explore Evidence →</a>
+        <button class="btn btn-ghost" id="hero-recruiter">Enter Recruiter Mode</button>
+        <a href="https://github.com/Vanshika-gupta001" target="_blank" rel="noopener" class="btn btn-ghost">GitHub ↗</a>
+      </div>
+      <div class="hero-meta">
+        <div><div class="k">EDUCATION</div><div class="v">MBA (AI & ML), Maa Shakumbhari University — 2025–2027 (pursuing)</div></div>
+        <div><div class="k">BASE</div><div class="v">Saharanpur, India</div></div>
+        <div><div class="k">STATUS</div><div class="v">Building public engineering portfolio in data science &amp; AI tooling</div></div>
+      </div>
+    </div>
+    <div class="system-panel">
+      <div class="sp-head"><span>IDENTITY.SYS</span><span class="pulse"></span></div>
+      <div class="identity-node">
+        <div class="avatar">VG</div>
+        <div class="id-text">
+          <div class="name">Vanshika Gupta</div>
+          <div class="role">MBA (AI & ML) Candidate</div>
+        </div>
+      </div>
+      <div class="sp-row"><span>Core stack</span><span>Python · FastAPI</span></div>
+      <div class="sp-row"><span>Focus</span><span>ML · NLP · GenAI</span></div>
+      <div class="sp-row"><span>Frontend</span><span>Next.js · React</span></div>
+      <div class="sp-row"><span>Repos public</span><span>2</span></div>
+      <div class="sp-row" style="border-bottom:none;"><span>Targeting</span><span>Data / ML / AI roles</span></div>
+      <div class="chip-row">
+        <span class="chip">PYTHON</span><span class="chip">SQL</span><span class="chip">FASTAPI</span>
+        <span class="chip">PANDAS</span><span class="chip">SCIKIT-LEARN</span><span class="chip">NEXT.JS</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><div class="line"></div></div>
+</section>
+
+<!-- CAREER MAP -->
+<section class="section" id="map">
+  <div class="section-head">
+    <div class="section-num">02 / CAREER MAP</div>
+    <h2 class="section-title">Skills, as evidence</h2>
+    <p class="section-desc">Not a skill bar. Click a node to see what it's actually for, and where it's proven.</p>
+  </div>
+  <div class="map-shell">
+    <div id="career-map"><svg id="map-svg"></svg></div>
+    <div class="map-detail" id="map-detail">
+      <div class="md-label">SELECT A NODE</div>
+      <div class="md-title">Career Map</div>
+      <p class="map-hint">Click any node in the network to see what I use it for, and which project proves it. Dashed nodes are clusters — the solid nodes underneath them are the real skills.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline" style="max-width:1320px; margin:0 auto;">
+
+<!-- SIGNATURE PROJECT -->
+<section class="section" id="signature">
+  <div class="section-head">
+    <div class="section-num">03 / SIGNATURE SYSTEM</div>
+    <h2 class="section-title">AI Business Analytics Platform</h2>
+    <p class="section-desc">The strongest evidence of how I turn messy business data into something decision-ready.</p>
+  </div>
+  <div class="sig-shell">
+    <div class="sig-top">
+      <div>
+        <div class="tag">SIGNATURE PROJECT · SOLO BUILD</div>
+        <h3>Automated Data-Profiling &amp; Insights Engine</h3>
+        <div class="stack">Python · FastAPI · Pandas/NumPy · Matplotlib/Seaborn · ReportLab · Next.js · Recharts</div>
+      </div>
+      <div class="sig-links">
+        <a href="https://github.com/Vanshika-gupta001/AI-Business-Analytics" target="_blank" rel="noopener">GITHUB ↗</a>
+      </div>
+    </div>
+    <div class="pipeline">
+      <div class="pipe-node"><div class="pn-i">01 / INPUT</div><div class="pn-t">CSV uploaded to a FastAPI /upload endpoint</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node"><div class="pn-i">02 / PROFILE</div><div class="pn-t">Column types, memory footprint, and shape profiled (Pandas)</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node"><div class="pn-i">03 / ANOMALY SCAN</div><div class="pn-t">Z-score outlier detection per numeric column (|z| &gt; 3)</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node"><div class="pn-i">04 / HEALTH SCORE</div><div class="pn-t">100 pts − 2/missing value − 5/duplicate row → letter grade A+–F</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node"><div class="pn-i">05 / AI SUMMARY</div><div class="pn-t">Rule-based narrative summary + a generated business report</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node"><div class="pn-i">06 / OUTPUT</div><div class="pn-t">Charts, recommendations, and a downloadable PDF report in the dashboard</div></div>
+    </div>
+    <div class="sig-grid">
+      <div class="sig-cell">
+        <h4>PROBLEM</h4>
+        <p>Before any real analysis can happen, someone has to manually check a dataset for missing values, duplicates, and general data health — a slow, repeatable step.</p>
+      </div>
+      <div class="sig-cell">
+        <h4>SYSTEM</h4>
+        <p>A FastAPI backend (<code>routes/upload.py</code>) orchestrates profiling, anomaly detection, health scoring, insight generation, chart rendering, and PDF export in a single request. The Next.js/React frontend renders the results across a health card, gauge, dataset card, recommendation card, and chart gallery.</p>
+      </div>
+      <div class="sig-cell">
+        <h4>AI LAYER</h4>
+        <p>A rule-based service (<code>ai_summary.py</code> / <code>business_ai.py</code>) turns the computed stats into a written summary and an executive-style business report. A separate service (<code>chat_ai.py</code>) integrates Google's Gemini API (<code>gemini-2.0-flash</code>) for open-ended dataset Q&amp;A — implemented, though not yet wired into the live chat endpoint (see Engineering Log).</p>
+      </div>
+      <div class="sig-cell">
+        <h4>DECISIONS</h4>
+        <p>The health score starts at 100 and subtracts 2 points per missing value and 5 points per duplicate row, floored at 0, then maps to a status (Excellent / Good / Needs Cleaning / Poor) and a letter grade (A+ to F). Duplicates were weighted higher because they directly distort aggregations, counts, and downstream analysis, while missing values are often manageable depending on their proportion and which column they hit.</p>
+      </div>
+      <div class="sig-cell">
+        <h4>RESULT</h4>
+        <p>Produces a health score + letter grade, an anomaly report, an AI-generated summary and business report, charts, and a downloadable PDF from a single upload — replacing what would otherwise be manual review. Tested on CSV datasets with a mix of numeric and categorical columns; the engine successfully generated profiling metrics, data-quality indicators, and automated insights across them.</p>
+      </div>
+      <div class="sig-cell">
+        <h4>PROOF</h4>
+        <p><a href="https://github.com/Vanshika-gupta001/AI-Business-Analytics" target="_blank" rel="noopener">github.com/Vanshika-gupta001/AI-Business-Analytics ↗</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS WALL -->
+<section class="section" id="projects">
+  <div class="section-head">
+    <div class="section-num">03B / CASE STUDIES</div>
+    <h2 class="section-title">Full project wall</h2>
+    <p class="section-desc">Every project opens into its own case study — problem, system, stack, and proof.</p>
+  </div>
+  <div class="proj-list" id="proj-list">
+
+    <div class="proj-item" data-id="p1">
+      <div class="proj-head">
+        <div class="proj-id">01</div>
+        <div class="proj-title">
+          <h3>AI Business Analytics Platform</h3>
+          <p>Python · FastAPI — data profiling & AI insights engine</p>
+        </div>
+        <div class="proj-toggle">OPEN CASE STUDY <span class="arrow">→</span></div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+          <div class="pb-block"><h5>PROBLEM</h5><p>Datasets need manual review for quality before analysis can begin.</p></div>
+          <div class="pb-block"><h5>SYSTEM</h5><p>FastAPI backend that profiles an uploaded CSV, runs z-score anomaly detection, computes a health score + letter grade, and generates an AI summary, business report, charts, and a PDF — rendered on a Next.js dashboard.</p></div>
+          <div class="pb-block"><h5>STACK</h5><p>Python, FastAPI, Pandas/NumPy, Matplotlib/Seaborn, ReportLab, Google Gemini API, Next.js, Recharts</p></div>
+          <div class="pb-block"><h5>RESULT</h5><p>Turns a raw CSV into a scored, explained, exportable report in one upload — cutting the manual review step typically required before analysis.</p></div>
+          <div class="pb-block"><h5>PROOF</h5><p><a href="https://github.com/Vanshika-gupta001/AI-Business-Analytics" target="_blank" rel="noopener">GitHub repo ↗</a></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-item" data-id="p2">
+      <div class="proj-head">
+        <div class="proj-id">02</div>
+        <div class="proj-title">
+          <h3>CampaignOS — The Deterministic Ad-Spend Optimizer</h3>
+          <p>Product Strategy &amp; UX · Next.js · FastAPI · Prisma — built at NetElixir AIgnition 3.0 Hackathon</p>
+        </div>
+        <div class="proj-toggle">OPEN CASE STUDY <span class="arrow">→</span></div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+          <div class="pb-block"><h5>PROBLEM</h5><p>Built during the NetElixir AIgnition 3.0 Hackathon. Ad platforms often double-count conversions, inflating reported ROAS — so media buyers scale budgets on numbers that look better than reality, and profitability crashes once they hit the wall.</p></div>
+          <div class="pb-block"><h5>SYSTEM</h5><p>A deterministic math engine (not an LLM) calculates the "Efficiency Apex" — the exact spend level where the next ad dollar stops paying off — across Meta, Google, and Bing, and exports a 10-day projection as CSV.</p></div>
+          <div class="pb-block"><h5>ROLE</h5><p>I defined the product positioning and "Agency CFO" business narrative, designed the dashboard user flows, and led the pitch presentation strategy, on a 3-person team alongside a lead architect (Next.js/FastAPI build) and a data engineer (CSV pipelines).</p></div>
+          <div class="pb-block"><h5>STACK</h5><p>Next.js frontend (port 3000), FastAPI backend (port 8000), SQLite via Prisma</p></div>
+          <div class="pb-block"><h5>PROOF</h5><p><a href="https://github.com/Vanshika-gupta001/campaign-os" target="_blank" rel="noopener">GitHub repo ↗</a></p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="hairline" style="max-width:1320px; margin:0 auto;">
+
+<!-- HOW SHE THINKS -->
+<section class="section" id="think">
+  <div class="section-head">
+    <div class="section-num">04 / APPROACH</div>
+    <h2 class="section-title">How I think</h2>
+    <p class="section-desc">A working scenario, and the sequence I'd actually walk through.</p>
+  </div>
+  <div class="think-shell">
+    <div class="think-scenario">
+      <div class="ts-label">SCENARIO</div>
+      <div class="ts-text">"A messy business dataset arrives."</div>
+      <p>Before any model or dashboard is useful, the data has to be trustworthy. This is the same sequence behind the AI Business Analytics Platform's profiling engine.</p>
+    </div>
+    <div class="think-steps" id="think-steps">
+      <div class="think-step" data-i="1"><div class="ts-row"><span class="ts-num">01</span><span class="ts-name">Understand the business question</span></div><div class="ts-detail"><p>Start from what decision the data needs to support — not the dataset itself.</p></div></div>
+      <div class="think-step" data-i="2"><div class="ts-row"><span class="ts-num">02</span><span class="ts-name">Inspect the data</span></div><div class="ts-detail"><p>Profile the dataset for structure, completeness, and health before touching analysis.</p></div></div>
+      <div class="think-step" data-i="3"><div class="ts-row"><span class="ts-num">03</span><span class="ts-name">Identify quality issues</span></div><div class="ts-detail"><p>Flag missing values and duplicate records — the exact step automated in the profiling engine.</p></div></div>
+      <div class="think-step" data-i="4"><div class="ts-row"><span class="ts-num">04</span><span class="ts-name">Establish a baseline</span></div><div class="ts-detail"><p>Defined quality bands using a weighted scoring approach: 80–100 = Good, 60–79 = Needs Attention, below 60 = Poor. These are an interpretable starting baseline rather than a claimed industry standard, meant to be calibrated as more datasets are evaluated.</p></div></div>
+      <div class="think-step" data-i="5"><div class="ts-row"><span class="ts-num">05</span><span class="ts-name">Select an approach</span></div><div class="ts-detail"><p>Chose the Z-score method for initial outlier detection — simple, computationally efficient, and interpretable for roughly normally-distributed numeric data. Would reach for IQR or Isolation Forest instead when data is heavily skewed or non-Gaussian.</p></div></div>
+      <div class="think-step" data-i="6"><div class="ts-row"><span class="ts-num">06</span><span class="ts-name">Validate</span></div><div class="ts-detail"><p>Tested the profiling engine on datasets where row counts, column types, missing values, duplicates, and summary stats could be checked by hand, and compared its output against direct pandas calculations to confirm the reported metrics were consistent.</p></div></div>
+      <div class="think-step" data-i="7"><div class="ts-row"><span class="ts-num">07</span><span class="ts-name">Communicate the insight</span></div><div class="ts-detail"><p>On CampaignOS, this meant translating a technical system into an "Agency CFO" business narrative for a pitch.</p></div></div>
+      <div class="think-step" data-i="8"><div class="ts-row"><span class="ts-num">08</span><span class="ts-name">Build a usable output</span></div><div class="ts-detail"><p>Ship it as an API and/or interface someone else can act on — not just a notebook.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINEERING LOG -->
+<section class="section" id="engineering">
+  <div class="section-head">
+    <div class="section-num">04B / ENGINEERING LOG</div>
+    <h2 class="section-title">Decisions, honestly logged</h2>
+    <p class="section-desc">Real decisions and real incidents from building both projects — sourced from the repos, not invented after the fact.</p>
+  </div>
+  <div class="eng-grid">
+    <div class="eng-card">
+      <h4>WHY FASTAPI FOR AI BUSINESS ANALYTICS?</h4>
+      <div class="eng-row"><span>CONTEXT</span><p>Backend for the data-profiling engine and API layer of the AI Business Analytics Platform.</p></div>
+      <div class="eng-row"><span>TRADEOFF</span><p>The project is API-first — it needs to expose profiling functionality as lightweight HTTP endpoints. FastAPI gives automatic OpenAPI/Swagger docs, Pydantic validation, type hints, and strong performance with little boilerplate. Django would have added unnecessary framework overhead for this service; Flask would've needed more manual setup for validation and API docs.</p></div>
+    </div>
+    <div class="eng-card">
+      <h4>WHY NEXT.JS FOR CAMPAIGNOS?</h4>
+      <div class="eng-row"><span>CONTEXT</span><p>The Next.js/FastAPI architecture was built by the team's lead architect; my role on that stack decision was downstream — designing the UX and dashboard flows the frontend needed to support, not the framework choice itself.</p></div>
+      <div class="eng-row"><span>TRADEOFF</span><p>The reasoning behind it: a dashboard-style analytics product benefits from a structured React framework, reusable components, TypeScript, and scalable architecture, and it integrates cleanly with an API-driven backend like FastAPI. Architecturally, the goal was to keep the analytics engine and API independent from the presentation layer so each could evolve separately.</p></div>
+    </div>
+    <div class="eng-card">
+      <h4>WHAT BROKE?</h4>
+      <div class="eng-row"><span>INCIDENT</span><p>The AI Business Analytics project was originally kept in a folder on the Desktop. It ran fine at first — but broke once new pieces were added (an AI chatbot integration and some ML conditions), due to path/environment conflicts caused by the nested Desktop folder location.</p></div>
+      <div class="eng-row"><span>LESSON</span><p>Moved the project to the root of the C: drive, which resolved the conflicts and got it running again — folder location and path setup can silently break a project as it grows.</p></div>
+    </div>
+    <div class="eng-card">
+      <h4>WHY A THIRD DESIGN ITERATION?</h4>
+      <div class="eng-row"><span>CONTEXT</span><p>Leading product/UI-UX design for CampaignOS's dashboard.</p></div>
+      <div class="eng-row"><span>DECISION</span><p>The first two design attempts didn't feel right, so a third version was designed from scratch.</p></div>
+      <div class="eng-row"><span>OUTCOME</span><p>The third attempt was the one both my teammates and I were happy with — it became the version the team built on.</p></div>
+    </div>
+    <div class="eng-card">
+      <h4>WHAT WOULD CHANGE AT SCALE?</h4>
+      <div class="eng-row"><span>CONSIDERATION</span><p>The project's own README lists this honestly as unfinished: rate limiting on <code>/upload</code> and <code>/chat</code> so one user can't hammer the pipeline, a background job queue (Celery/RQ) since profiling + charts + PDF + summary currently all run synchronously in one request, stricter file-size/CSV validation, and object storage (S3-compatible) instead of local disk once deployed somewhere without persistent disk.</p></div>
+    </div>
+    <div class="eng-card">
+      <h4>SECRETS IN THE REPO</h4>
+      <div class="eng-row"><span>INCIDENT</span><p>An earlier version of the project's <code>.env.example</code> had a real Groq API key committed to it.</p></div>
+      <div class="eng-row"><span>LESSON</span><p>The README now leads with a rotation step — revoke the old key and generate a fresh one before doing anything else — as a standing reminder before anyone else clones the repo.</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline" style="max-width:1320px; margin:0 auto;">
+
+<!-- BUILD LOG -->
+<section class="section" id="log">
+  <div class="section-head">
+    <div class="section-num">05 / BUILD LOG</div>
+    <h2 class="section-title">Timeline</h2>
+    <p class="section-desc">Education, certifications, and milestones — real dates only.</p>
+  </div>
+  <div class="log-list">
+    <div class="log-entry">
+      <div class="log-date">2025 — 2027</div>
+      <h4>MBA (AI &amp; ML), Maa Shakumbhari University</h4>
+      <p>Currently pursuing. Specializing in AI &amp; machine learning within a business program.</p>
+    </div>
+    <div class="log-entry">
+      <div class="log-date">15 JUN 2026 — 14 JUL 2026</div>
+      <h4>NetElixir AIgnition 3.0 Hackathon</h4>
+      <p>Participant — built CampaignOS, a deterministic ad-spend optimization platform, under competitive time constraints.</p>
+    </div>
+    <div class="log-entry">
+      <div class="log-date">AUG 2020 — JUN 2023</div>
+      <h4>BCA, Saharanpur Institute of Advanced Studies</h4>
+      <p>Affiliated to Chaudhary Charan Singh University. Graduated with 65.3%.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="contact-shell">
+    <div class="contact-cta">
+      <div class="section-num">06 / CONTACT</div>
+      <h2>Open to Data Science, ML, and Applied AI roles.</h2>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:vanshi.kag890@gmail.com"><span>EMAIL</span><span>vanshi.kag890@gmail.com</span></a>
+      <a href="https://github.com/Vanshika-gupta001" target="_blank" rel="noopener"><span>GITHUB</span><span>Vanshika-gupta001 ↗</span></a>
+      <a href="https://linkedin.com/in/vanshika-gupta-mba" target="_blank" rel="noopener"><span>LINKEDIN</span><span>vanshika-gupta-mba ↗</span></a>
+      <a href="tel:+919286391315"><span>PHONE</span><span>+91 92863 91315</span></a>
+      <div class="contact-links-static"><span>BASE</span><span>Saharanpur, India</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>VANSHIKA GUPTA © 2026 — AI / ML SYSTEMS</span>
+  <span>BUILT WITH HTML / CSS / JS · THREE.JS · REAL DATA ONLY</span>
+</footer>
+
+</div>
+
+<!-- AI ASSISTANT -->
+<div class="ai-orb" id="ai-orb" role="button" aria-label="Open ARC, portfolio assistant" tabindex="0">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8" opacity="0.5"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg>
+</div>
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-head">
+    <div>
+      <div class="ai-title">ARC <span class="pulse" style="margin-left:2px;"></span></div>
+      <div class="ai-sub">PORTFOLIO INTELLIGENCE</div>
+    </div>
+    <button class="ai-close" id="ai-close">✕</button>
+  </div>
+  <div class="ai-body" id="ai-body">
+    <div class="ai-msg bot">Hi — I'm ARC. Ask me what Vanshika builds, or pick a question below. I only answer from her real resume and project data — think of me as a search layer over her work, not her voice.</div>
+  </div>
+  <div class="ai-suggest" id="ai-suggest"></div>
+  <div class="ai-note">Rule-based over structured portfolio data — not a live model. Wire this panel to an LLM endpoint later.</div>
+</div>
+
+<!-- COMMAND PALETTE -->
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-box">
+    <input class="cmdk-input" id="cmdk-input" placeholder="Search portfolio... (projects, resume, GitHub)" autocomplete="off" />
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<!-- RECRUITER MODE -->
+<div class="recruiter-overlay" id="recruiter-overlay">
+  <div class="rec-box">
+    <button class="rec-close" id="recruiter-close">CLOSE ✕</button>
+    <div class="rec-eyebrow">RECRUITER MODE — 30 SECOND READ</div>
+    <h2>Vanshika Gupta</h2>
+    <div class="rec-block">
+      <h4>TARGET ROLES</h4>
+      <div class="rec-tags"><span>Data Scientist</span><span>ML Engineer</span><span>Applied AI</span><span>Data / Business Analyst</span></div>
+    </div>
+    <div class="rec-block">
+      <h4>STRONGEST EVIDENCE</h4>
+      <p>AI Business Analytics Platform — an automated data-profiling engine (Python/FastAPI) that scores dataset health and flags issues, with an AI-driven insights layer on top.</p>
+    </div>
+    <div class="rec-block">
+      <h4>TECHNICAL PROOF</h4>
+      <ul><li>2 public GitHub repositories with real case studies</li><li>Product/UX role on a team ad-spend optimization platform (CampaignOS)</li><li>MBA (AI &amp; ML) specialization, 2025–2027</li></ul>
+    </div>
+    <div class="rec-block">
+      <h4>CURRENT FOCUS</h4>
+      <p>MBA (AI & ML) at Maa Shakumbhari University, alongside applied Python/FastAPI project work.</p>
+    </div>
+    <a href="#signature" class="rec-cta" id="rec-explore">Explore evidence →</a>
+  </div>
+</div>
+
+<script>
+/* ============ THREE.JS HERO NETWORK ============ */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth < 760;
+  if(!window.THREE){ return; }
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, canvas.parentElement.clientWidth/canvas.parentElement.clientHeight, 0.1, 1000);
+  camera.position.z = 26;
+
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  function resize(){
+    const w = canvas.parentElement.clientWidth, h = canvas.parentElement.clientHeight;
+    renderer.setSize(w,h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const NODE_COUNT = isMobile ? 26 : 60;
+  const nodes = [];
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const nodeGeo = new THREE.SphereGeometry(0.09, 8, 8);
+  const colors = [0x5b82ff, 0x8f6bff, 0x3fe0ff];
+
+  for(let i=0;i<NODE_COUNT;i++){
+    const mat = new THREE.MeshBasicMaterial({color: colors[i%3], transparent:true, opacity:0.85});
+    const mesh = new THREE.Mesh(nodeGeo, mat);
+    const radius = 9 + Math.random()*6;
+    const theta = Math.random()*Math.PI*2;
+    const phi = Math.acos((Math.random()*2)-1);
+    mesh.position.set(
+      radius*Math.sin(phi)*Math.cos(theta),
+      radius*Math.sin(phi)*Math.sin(theta)*0.6,
+      radius*Math.cos(phi)*0.6
+    );
+    mesh.userData = { basePos: mesh.position.clone(), speed: 0.15+Math.random()*0.25, offset: Math.random()*Math.PI*2 };
+    group.add(mesh);
+    nodes.push(mesh);
+  }
+
+  // connecting lines between nearby nodes
+  const lineMat = new THREE.LineBasicMaterial({color:0x2a3a66, transparent:true, opacity:0.35});
+  const linePositions = [];
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      if(nodes[i].position.distanceTo(nodes[j].position) < 5.2){
+        linePositions.push(nodes[i].position.x, nodes[i].position.y, nodes[i].position.z);
+        linePositions.push(nodes[j].position.x, nodes[j].position.y, nodes[j].position.z);
+      }
+    }
+  }
+  const lineGeo = new THREE.BufferGeometry();
+  lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+  const lines = new THREE.LineSegments(lineGeo, lineMat);
+  group.add(lines);
+
+  let mouseX=0, mouseY=0;
+  window.addEventListener('mousemove', (e)=>{
+    mouseX = (e.clientX/window.innerWidth - 0.5);
+    mouseY = (e.clientY/window.innerHeight - 0.5);
+  });
+
+  let t = 0;
+  function animate(){
+    requestAnimationFrame(animate);
+    if(reduceMotion){ renderer.render(scene, camera); return; }
+    t += 0.006;
+    group.rotation.y = t*0.15 + mouseX*0.4;
+    group.rotation.x = mouseY*0.2;
+    nodes.forEach(n=>{
+      n.position.y = n.userData.basePos.y + Math.sin(t*n.userData.speed*4 + n.userData.offset)*0.4;
+    });
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+/* ============ CAREER MAP ============ */
+(function(){
+  const mapData = {
+    core: {label:"VANSHIKA", type:"core"},
+    clusters: [
+      {id:"c-ai", label:"AI / ML", x:24, y:24},
+      {id:"c-data", label:"DATA", x:76, y:24},
+      {id:"c-eng", label:"ENGINEERING", x:20, y:78},
+      {id:"c-prod", label:"PRODUCT", x:80, y:78}
+    ],
+    nodes: [
+      {id:"ml", label:"Machine Learning", cluster:"c-ai", x:14, y:12,
+        usedFor:"Core discipline within the MBA (AI & ML) specialization.",
+        evidence:"MBA (AI & ML), Maa Shakumbhari University — 2025–2027.", link:null},
+      {id:"dl", label:"Deep Learning", cluster:"c-ai", x:32, y:8,
+        usedFor:"Studied as part of the AI & ML specialization.",
+        evidence:"MBA (AI & ML) coursework.", link:null},
+      {id:"nlp", label:"NLP", cluster:"c-ai", x:8, y:30,
+        usedFor:"Studied as part of the AI & ML specialization.",
+        evidence:"MBA (AI & ML) coursework.", link:null},
+      {id:"genai", label:"Generative AI / LLMs", cluster:"c-ai", x:26, y:36,
+        usedFor:"Applied via the AI insights layer of the analytics platform.",
+        evidence:"AI Business Analytics Platform.", link:"https://github.com/Vanshika-gupta001/AI-Business-Analytics"},
+      {id:"sklearn", label:"Scikit-learn", cluster:"c-ai", x:40, y:20,
+        usedFor:"Machine learning library within the technical skill set.",
+        evidence:"Listed skill — MBA (AI & ML) track.", link:null},
+      {id:"tf", label:"TensorFlow", cluster:"c-ai", x:12, y:44,
+        usedFor:"Deep learning framework within the technical skill set.",
+        evidence:"Listed skill — MBA (AI & ML) track.", link:null},
+      {id:"pytorch", label:"PyTorch", cluster:"c-ai", x:30, y:48,
+        usedFor:"Deep learning framework within the technical skill set.",
+        evidence:"Listed skill — MBA (AI & ML) track.", link:null},
+
+      {id:"python", label:"Python", cluster:"c-eng", x:14, y:64,
+        usedFor:"Primary language for the data-profiling engine.",
+        evidence:"AI Business Analytics Platform.", link:"https://github.com/Vanshika-gupta001/AI-Business-Analytics"},
+      {id:"fastapi", label:"FastAPI", cluster:"c-eng", x:8, y:80,
+        usedFor:"Backend framework for the profiling engine's API layer.",
+        evidence:"AI Business Analytics Platform.", link:"https://github.com/Vanshika-gupta001/AI-Business-Analytics"},
+      {id:"sql", label:"SQL", cluster:"c-eng", x:26, y:74,
+        usedFor:"Querying and working with structured data.",
+        evidence:"Listed core skill.", link:null},
+      {id:"git", label:"Git / GitHub", cluster:"c-eng", x:16, y:92,
+        usedFor:"Version control across both public repositories.",
+        evidence:"github.com/Vanshika-gupta001", link:"https://github.com/Vanshika-gupta001"},
+      {id:"ts", label:"TypeScript", cluster:"c-eng", x:34, y:88,
+        usedFor:"Typed JavaScript for frontend work.",
+        evidence:"Listed core skill.", link:null},
+
+      {id:"nextjs", label:"Next.js", cluster:"c-prod", x:70, y:64,
+        usedFor:"The frontend framework the CampaignOS dashboard UX flows were designed for — built by the team's lead architect.",
+        evidence:"CampaignOS — the deterministic \"Efficiency Apex\" ad-spend platform.", link:"https://github.com/Vanshika-gupta001/campaign-os"},
+      {id:"react", label:"React", cluster:"c-prod", x:86, y:70,
+        usedFor:"Component library underlying that same Next.js frontend.",
+        evidence:"CampaignOS.", link:"https://github.com/Vanshika-gupta001/campaign-os"},
+      {id:"uxprod", label:"Product Strategy & UX", cluster:"c-prod", x:76, y:88,
+        usedFor:"Defined product positioning and dashboard UX flows; led pitch strategy for a 3-person team.",
+        evidence:"CampaignOS — \"Agency CFO\" narrative around the deterministic \"Efficiency Apex\" ad-spend engine.", link:"https://github.com/Vanshika-gupta001/campaign-os"},
+      {id:"pandas", label:"Pandas / NumPy", cluster:"c-data", x:70, y:16,
+        usedFor:"Data handling within the profiling engine.",
+        evidence:"AI Business Analytics Platform.", link:"https://github.com/Vanshika-gupta001/AI-Business-Analytics"},
+      {id:"dataviz", label:"Data Visualization", cluster:"c-data", x:88, y:30,
+        usedFor:"Presenting profiling and analytics output.",
+        evidence:"AI Business Analytics Platform.", link:"https://github.com/Vanshika-gupta001/AI-Business-Analytics"},
+    ]
+  };
+
+  const mapEl = document.getElementById('career-map');
+  const svg = document.getElementById('map-svg');
+  const detail = document.getElementById('map-detail');
+
+  function pct(v){ return v + '%'; }
+
+  // core node
+  const core = document.createElement('div');
+  core.className = 'map-node core';
+  core.style.left = '50%'; core.style.top = '50%';
+  core.textContent = 'VANSHIKA';
+  mapEl.appendChild(core);
+
+  mapData.clusters.forEach(c=>{
+    const el = document.createElement('div');
+    el.className = 'map-node cluster';
+    el.style.left = pct(c.x); el.style.top = pct(c.y);
+    el.textContent = c.label;
+    mapEl.appendChild(el);
+  });
+
+  const nodeEls = {};
+  mapData.nodes.forEach(n=>{
+    const el = document.createElement('div');
+    el.className = 'map-node';
+    el.style.left = pct(n.x); el.style.top = pct(n.y);
+    el.textContent = n.label;
+    el.tabIndex = 0;
+    el.addEventListener('click', ()=> selectNode(n, el));
+    el.addEventListener('keypress', (e)=>{ if(e.key==='Enter') selectNode(n, el); });
+    mapEl.appendChild(el);
+    nodeEls[n.id] = el;
+  });
+
+  function drawLines(){
+    const w = mapEl.clientWidth, h = mapEl.clientHeight;
+    let out = '';
+    mapData.nodes.forEach(n=>{
+      const x1 = w*0.5, y1 = h*0.5;
+      const x2 = w*n.x/100, y2 = h*n.y/100;
+      out += `<line class="map-line" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"></line>`;
+    });
+    svg.innerHTML = out;
+  }
+  drawLines();
+  window.addEventListener('resize', drawLines);
+
+  let active = null;
+  function selectNode(n, el){
+    if(active) active.classList.remove('active');
+    el.classList.add('active');
+    active = el;
+    detail.innerHTML = `
+      <div class="md-label">SELECTED NODE</div>
+      <div class="md-title">${n.label}</div>
+      <div class="md-block"><h4>USED FOR</h4><p>${n.usedFor}</p></div>
+      <div class="md-block"><h4>EVIDENCE</h4><p>${n.evidence}</p></div>
+      ${n.link ? `<div class="md-block"><a href="${n.link}" target="_blank" rel="noopener">View proof on GitHub ↗</a></div>` : ''}
+    `;
+  }
+})();
+
+/* ============ PROJECT ACCORDION ============ */
+document.querySelectorAll('.proj-head').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const item = head.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.proj-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
+/* ============ HOW SHE THINKS STEPS ============ */
+document.querySelectorAll('.think-step').forEach(step=>{
+  step.addEventListener('click', ()=>{
+    const wasOpen = step.classList.contains('open');
+    document.querySelectorAll('.think-step').forEach(s=>s.classList.remove('open'));
+    if(!wasOpen) step.classList.add('open');
+  });
+});
+
+/* ============ AI ASSISTANT ============ */
+(function(){
+  const orb = document.getElementById('ai-orb');
+  const panel = document.getElementById('ai-panel');
+  const body = document.getElementById('ai-body');
+  const closeBtn = document.getElementById('ai-close');
+  const suggestWrap = document.getElementById('ai-suggest');
+
+  const qa = [
+    {q:"What does Vanshika build?", a:"She builds data and AI systems — most notably an automated data-profiling engine (Python/FastAPI) that scores dataset health and surfaces quality issues via an AI insights layer, plus product/UX work on a deterministic ad-spend platform called CampaignOS."},
+    {q:"Show me her strongest project", a:"The AI Business Analytics Platform. It's a Python/FastAPI engine that profiles a dataset, scores its health, flags missing values and duplicates, and uses an AI-driven insights layer to cut the manual review step before analysis. See it under 'Signature System' or on GitHub: github.com/Vanshika-gupta001/AI-Business-Analytics"},
+    {q:"What ML skills does she actually demonstrate?", a:"Her demonstrated (project-backed) skills are Python, FastAPI, and applied data-quality logic in the AI Business Analytics Platform. ML/DL/NLP/GenAI are part of her MBA (AI & ML) specialization at Maa Shakumbhari University (2025–2027) — I won't overstate project-level proof beyond what's documented."},
+    {q:"Explain the AI Business Analytics project", a:"It's an automated data-profiling engine built in Python and FastAPI. It scores a dataset's health, flags missing values and duplicate records before analysis begins, and layers AI-driven insights on top to surface data quality issues automatically — cutting the manual review step."},
+    {q:"How does she approach business problems?", a:"On CampaignOS, she defined the product positioning and business narrative (the 'Agency CFO' framing — when should media buyers stop scaling spend), then translated that into dashboard UX flows and led the pitch presentation strategy for a 3-person team."},
+    {q:"What has she built with FastAPI?", a:"Two things: the backend/API layer for the AI Business Analytics Platform's profiling engine, and the backend for CampaignOS, a deterministic ad-spend optimization platform (built alongside Next.js and Prisma)."},
+    {q:"Show me her GitHub", a:"github.com/Vanshika-gupta001 — two public repos: AI-Business-Analytics and campaign-os."},
+    {q:"Why should I interview her?", a:"She pairs applied Python/FastAPI engineering (the data-profiling engine) with product and business framing (CampaignOS's positioning and UX), inside an active MBA (AI & ML) specialization. That combination — build it, then explain why it matters to the business — is the throughline across her work."},
+    {q:"What is she currently learning?", a:"She's pursuing an MBA (AI & ML) at Maa Shakumbhari University (2025–2027), applying it through hands-on Python/FastAPI project work."},
+    {q:"What broke while building this?", a:"The AI Business Analytics project was originally in a folder on her Desktop. It ran fine until she added an AI chatbot integration and some ML conditions — then it broke due to path/environment conflicts from the nested folder location. Moving the project to the root of the C: drive fixed it."},
+    {q:"How did the CampaignOS design come together?", a:"CampaignOS was built during the NetElixir AIgnition 3.0 Hackathon (15 Jun – 14 Jul 2026). Vanshika led the UI/UX design for its dashboard. Her first two design attempts didn't feel right to her, so she built a third version from scratch — the one both she and her teammates ended up happy with."},
+    {q:"What was CampaignOS actually solving?", a:"Ad platforms often double-count conversions, which inflates reported ROAS — so media buyers scale spend on numbers that look better than reality, and profitability crashes once they hit the wall. CampaignOS calculates the 'Efficiency Apex' — the exact spend level where the next ad dollar stops paying off — across Meta, Google, and Bing."},
+    {q:"Who else worked on CampaignOS?", a:"It was a 3-person hackathon team: a lead architect who built the Next.js/FastAPI system and the math engine, Vanshika on product positioning and UI/UX design, and a data engineer who handled the CSV pipelines."}
+  ];
+
+  function renderSuggestions(){
+    suggestWrap.innerHTML = '';
+    qa.forEach(item=>{
+      const b = document.createElement('button');
+      b.textContent = item.q;
+      b.addEventListener('click', ()=> ask(item.q));
+      suggestWrap.appendChild(b);
+    });
+  }
+  renderSuggestions();
+
+  function addMsg(text, who){
+    const d = document.createElement('div');
+    d.className = 'ai-msg ' + who;
+    d.textContent = text;
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function ask(question){
+    addMsg(question, 'user');
+    const match = qa.find(x=>x.q === question);
+    setTimeout(()=>{
+      addMsg(match ? match.a : "I only answer from Vanshika's real portfolio data, and I don't have that mapped yet — try one of the suggested questions, or reach her directly via the Contact section.", 'bot');
+    }, 280);
+  }
+
+  function openPanel(){ panel.classList.add('open'); }
+  function togglePanel(){ panel.classList.toggle('open'); }
+  orb.addEventListener('click', togglePanel);
+  orb.addEventListener('keypress', (e)=>{ if(e.key==='Enter') togglePanel(); });
+  closeBtn.addEventListener('click', ()=> panel.classList.remove('open'));
+
+  window.__openARC = openPanel;
+})();
+
+/* ============ COMMAND PALETTE ============ */
+(function(){
+  const overlay = document.getElementById('cmdk-overlay');
+  const input = document.getElementById('cmdk-input');
+  const list = document.getElementById('cmdk-list');
+  const trigger = document.getElementById('cmdk-trigger');
+
+  const commands = [
+    {label:"Open Projects", tag:"nav", action:()=>document.getElementById('projects').scrollIntoView({behavior:'smooth'})},
+    {label:"Open Career Map", tag:"nav", action:()=>document.getElementById('map').scrollIntoView({behavior:'smooth'})},
+    {label:"Enter Recruiter Mode", tag:"mode", action:()=>document.getElementById('recruiter-overlay').classList.add('open')},
+    {label:"Open AI Assistant (ARC)", tag:"ai", action:()=>window.__openARC()},
+    {label:"Open GitHub", tag:"link", action:()=>window.open('https://github.com/Vanshika-gupta001','_blank')},
+    {label:"Open LinkedIn", tag:"link", action:()=>window.open('https://linkedin.com/in/vanshika-gupta-mba','_blank')},
+    {label:"Contact Me", tag:"nav", action:()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'})},
+  ];
+
+  let filtered = commands.slice();
+  let sel = 0;
+
+  function render(){
+    list.innerHTML = '';
+    filtered.forEach((c,i)=>{
+      const el = document.createElement('div');
+      el.className = 'cmdk-item' + (i===sel ? ' sel' : '');
+      el.innerHTML = `<span>${c.label}</span><span class="tag">${c.tag}</span>`;
+      el.addEventListener('click', ()=>{ c.action(); close(); });
+      list.appendChild(el);
+    });
+  }
+
+  function open(){
+    overlay.classList.add('open');
+    input.value=''; filtered = commands.slice(); sel=0; render();
+    setTimeout(()=>input.focus(), 50);
+  }
+  function close(){ overlay.classList.remove('open'); }
+
+  trigger.addEventListener('click', open);
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
+
+  input.addEventListener('input', ()=>{
+    const v = input.value.toLowerCase();
+    filtered = commands.filter(c=>c.label.toLowerCase().includes(v));
+    sel = 0; render();
+  });
+  input.addEventListener('keydown', (e)=>{
+    if(e.key==='ArrowDown'){ e.preventDefault(); sel = Math.min(sel+1, filtered.length-1); render(); }
+    if(e.key==='ArrowUp'){ e.preventDefault(); sel = Math.max(sel-1, 0); render(); }
+    if(e.key==='Enter'){ if(filtered[sel]){ filtered[sel].action(); close(); } }
+    if(e.key==='Escape'){ close(); }
+  });
+
+  window.addEventListener('keydown', (e)=>{
+    if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); open(); }
+    if(e.key==='Escape'){ close(); }
+  });
+})();
+
+/* ============ RECRUITER MODE ============ */
+(function(){
+  const overlay = document.getElementById('recruiter-overlay');
+  const openers = [document.getElementById('recruiter-open'), document.getElementById('hero-recruiter')];
+  const closeBtn = document.getElementById('recruiter-close');
+  openers.forEach(b=> b && b.addEventListener('click', ()=> overlay.classList.add('open')));
+  closeBtn.addEventListener('click', ()=> overlay.classList.remove('open'));
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) overlay.classList.remove('open'); });
+  document.getElementById('rec-explore').addEventListener('click', ()=>{
+    overlay.classList.remove('open');
+  });
+})();
+</script>
+</body>
+</html>
